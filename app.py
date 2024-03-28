@@ -1,10 +1,13 @@
 import streamlit as st
 import pickle
 import numpy as np
+import pandas as pd  # Add import statement for pandas
 
-# import the model
-pipe = pickle.load(open('pipe.pkl','rb'))
-df = pickle.load(open('df.pkl','rb'))
+# Load the model and dataframe
+with open('pipe.pkl','rb') as pipe_file:
+    pipe = pickle.load(pipe_file)
+
+df = pd.read_pickle('df.pkl')  # Load dataframe using pandas
 
 st.title("Laptop Predictor")
 
@@ -63,4 +66,3 @@ if st.button('Predict Price'):
 
     query = query.reshape(1,12)
     st.title("The predicted price of this configuration is " + str(int(np.exp(pipe.predict(query)[0]))))
-
